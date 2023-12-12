@@ -36,6 +36,7 @@ namespace RESPONSI
                 MessageBox.Show("Data berhasil Ditambah", "Insert Data", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 conn.Close();
                 load_data();
+                txt_empty();
                 r = null;
             }
             else
@@ -74,6 +75,7 @@ namespace RESPONSI
                 MessageBox.Show("Data berhasil di edit", "Edit Data", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 conn.Close();
                 load_data();
+                txt_empty();
                 r = null;
             }
             else
@@ -91,8 +93,6 @@ namespace RESPONSI
             r = dgvData.Rows[e.RowIndex];
             txtName.Text = r.Cells["name"].Value.ToString();
             deptCombo.Text = r.Cells["dept_name"].Value.ToString();
-
-
 
         }
 
@@ -114,6 +114,7 @@ namespace RESPONSI
                     MessageBox.Show("Data berhasil Dihapus", "Delete Data", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     conn.Close();
                     load_data();
+                    txt_empty();
                     r = null;
                 }
                 else
@@ -136,7 +137,12 @@ namespace RESPONSI
 
         private void Test_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("sadada" + dropdown_handle());
+        }
+
+        public void txt_empty()
+        {
+            txtName.Text = null;
+            deptCombo.Text = null;  
         }
 
         private int dropdown_handle()
