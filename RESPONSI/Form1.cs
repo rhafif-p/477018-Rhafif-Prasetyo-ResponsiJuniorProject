@@ -31,9 +31,21 @@ namespace RESPONSI
             cmd = new NpgsqlCommand(sql, conn);
             cmd.Parameters.AddWithValue("_name", txtName.Text);
             cmd.Parameters.AddWithValue("_dept_id", depart_id);
-            cmd.ExecuteNonQuery();
-            conn.Close();
-            load_data();
+            if ((int)cmd.ExecuteScalar() == 1)
+            {
+                MessageBox.Show("Data berhasil Ditambah", "Insert Data", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                conn.Close();
+                load_data();
+                r = null;
+            }
+            else
+            {
+                MessageBox.Show("Data Gagal di proses");
+                conn.Close();
+                load_data();
+                r = null;
+
+            }
         }
 
         private void load_data()
@@ -57,16 +69,27 @@ namespace RESPONSI
             cmd.Parameters.AddWithValue("_id_k", r.Cells["id"].Value);
             cmd.Parameters.AddWithValue("_name", txtName.Text);
             cmd.Parameters.AddWithValue("_id_dept", depart_id);
-            cmd.ExecuteNonQuery();
-            conn.Close();
-            load_data();
+            if ((int)cmd.ExecuteScalar() == 1)
+            {
+                MessageBox.Show("Data berhasil di edit", "Edit Data", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                conn.Close();
+                load_data();
+                r = null;
+            }
+            else
+            {
+                MessageBox.Show("Data Gagal di proses");
+                conn.Close();
+                load_data();
+                r = null;
+
+            }
         }
 
         private void dgvData_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             r = dgvData.Rows[e.RowIndex];
             txtName.Text = r.Cells["name"].Value.ToString();
-            txtDept.Text = r.Cells["dept_id"].Value.ToString();
             deptCombo.Text = r.Cells["dept_name"].Value.ToString();
 
 
@@ -89,6 +112,13 @@ namespace RESPONSI
                 if ((int)cmd.ExecuteScalar() == 1)
                 {
                     MessageBox.Show("Data berhasil Dihapus", "Delete Data", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    conn.Close();
+                    load_data();
+                    r = null;
+                }
+                else
+                {
+                    MessageBox.Show("Data Gagal di proses");
                     conn.Close();
                     load_data();
                     r = null;
